@@ -1,5 +1,6 @@
 package com.springmvc.dao;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.apicloud.sdk.api.Resource;
@@ -27,9 +28,9 @@ public class ArticleDao {
 
         ArrayList<ArticleEntity> list=new ArrayList<ArticleEntity>();
         JSONObject filterJSON=new JSONObject();
-        filterJSON.put("limit", 10);
-        filterJSON.put("skip", 10*index);
-        filterJSON.put("order", "createdAt DESC");
+        filterJSON.put("limit", 10);//限制返回十条记录
+        filterJSON.put("skip", 10*(index-1));//跳过多少条纪录，比如当前在第二页，跳过第一面的10*（2-1）条纪录。
+        filterJSON.put("order", "createdAt DESC");//按时间降序排列
         System.out.println(filterJSON.toJSONString());
         JSONArray jsonArray=resource.doFilterSearch(table_name,filterJSON.toJSONString()).getJSONArray("data");
         for(int i=0;i<jsonArray.size();i++){
@@ -41,6 +42,7 @@ public class ArticleDao {
             articleEntity.setType(jsonObject.getString("type"));
             articleEntity.setContent(URLDecoder.decode(jsonObject.getString("content"), "utf-8"));
             articleEntity.setCreate_date(jsonObject.getString("createdAt"));
+            articleEntity.setAutor(jsonObject.getString("autor"));
             list.add(articleEntity);
         }
         return list;
@@ -60,8 +62,8 @@ public class ArticleDao {
         return articleEntity;
     }
 
-    public Boolean create(String title, String type, String rel_chan, String content, String img, String bot) throws UnsupportedEncodingException {
-
+    public Boolean create(String title, String type, String rel_chan, String content, String img, String bot,String autor) throws UnsupportedEncodingException {
+    	
         JSONObject property=new JSONObject();
         if("txt".equals(type)||"img".equals(type)){
             property.put("imgs",img);
@@ -71,15 +73,14 @@ public class ArticleDao {
                 property.put("imgs",json.getString("url"));
             }
         }
-//        property.put("title", URLEncoder.encode(title,"utf-8"));
         title = title.replaceAll("%", "%25");//转码%号
         property.put("title", title);
         property.put("rel_chan",rel_chan);
         property.put("type",type);
         content = content.replaceAll("%", "%25");//转码%号
         property.put("content",content);
-//        property.put("content", URLEncoder.encode(content,"utf-8"));
         property.put("is_bot",bot);
+        property.put("autor", autor);
         JSONObject jsonObject=resource.createObject(table_name, property);
         return true;
     }

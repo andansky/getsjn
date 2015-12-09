@@ -15,7 +15,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="renderer" content="webkit">
-  <title>分享页面</title>
+  <title>Get神技能</title>
   <script src="${pageContext.request.contextPath}/js/jquery.js"></script>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/share.css">
   <link type="image/x-icon" href="images/logo.ico" rel="shortcut icon" />
@@ -28,12 +28,12 @@
   </div>
 </a>
 <h3 class="title">${article.title}</h3>
-<span class="date">${article.create_date}</span>
+<p><span class="date">${article.create_date}</span></p>
 <div class="content">
   ${article.content}
 </div>
 <div class="list">
-<!--  <h3>热门文章</h3>
+  <h3>热门文章</h3>
   <ul>
     <a href="#">
       <li>
@@ -61,7 +61,6 @@
     </a>
   </ul>
 </div>
-  -->
 <div class="download" id="download">
   <a href="http://qsbk.bluestorm.top">立即下载手机客户端</a>
 </div>

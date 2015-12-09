@@ -14,8 +14,17 @@ public class ArticleEntity {
     private String create_date;
     private String update_date;
     private String is_collect;
+    private String autor;
 
-    public String getId() {
+    public String getAutor() {
+		return autor;
+	}
+
+	public void setAutor(String autor) {
+		this.autor = autor;
+	}
+
+	public String getId() {
         return id;
     }
 

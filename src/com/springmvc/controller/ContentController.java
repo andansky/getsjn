@@ -1,5 +1,6 @@
 package com.springmvc.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.apicloud.sdk.api.Resource;
 import com.springmvc.dao.ArticleDao;
@@ -19,14 +20,22 @@ import java.io.UnsupportedEncodingException;
 @Controller
 @RequestMapping("content")
 public class ContentController {
-
+	String autor;
 	ArticleDao articleDao=new ArticleDao();
 	ColumnDao columnDao=new ColumnDao();
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String  list(Model model,HttpSession httpSession) throws UnsupportedEncodingException {
-		model.addAttribute("list",articleDao.getArticleList(0));
-		return "content/list";
+		
+		httpSession.getAttribute("admin");		
+		if(httpSession.getAttribute("admin")==null){
+			return "admin/login";
+		}else{	
+			JSONObject temp=JSON.parseObject(httpSession.getAttribute("admin").toString());
+			autor=temp.getString("username");
+			model.addAttribute("list",articleDao.getArticleList(1));//getArticleList的参数为获取当前第几页的数据
+			return "content/list";
+		}	
 	}
 
 	@RequestMapping(value = "add",method = RequestMethod.GET)
@@ -40,7 +49,7 @@ public class ContentController {
 	public String create(@RequestParam(value = "title")String title,@RequestParam(value = "type")String type,
 						 @RequestParam(value = "column")String column,@RequestParam(value = "content")String content,
 						 @RequestParam(value = "img")String img,@RequestParam(value = "bot")String bot) throws UnsupportedEncodingException {
-		articleDao.create(title,type,column,content,img,bot);
+		articleDao.create(title,type,column,content,img,bot,autor);
 		return "redirect:/content/";
 	}
 

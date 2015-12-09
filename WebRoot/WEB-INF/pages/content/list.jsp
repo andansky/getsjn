@@ -38,9 +38,9 @@
         <input type="button" class="button button-small border-yellow" value="批量删除" />
       </div>
       <table class="table table-hover">
-        <tr><th width="60">选择</th><th width="120">类型</th><th width="*">标题</th><th width="100">时间</th><th width="100">操作</th></tr>
+        <tr><th width="60">选择</th><th width="120">类型</th><th width="*">标题</th><th width="100">作者</th><th width="100">操作</th></tr>
         <c:forEach  items="${list}" var="p">
-        <tr><td><input type="checkbox" name="id" value="${p.id}" /></td><td>${p.type}</td><td>${p.title}</td><td>${p.create_date}</td><td><a class="button border-blue button-little" href="${pageContext.request.contextPath}/content/update/${p.id}">修改</a> <a class="button border-yellow button-little" href="${pageContext.request.contextPath}/content/delete/${p.id}" onclick="{if(confirm('确认删除?')){return true;}return false;}">删除</a></td></tr>
+        <tr><td><input type="checkbox" name="id" value="${p.id}" /></td><td>${p.type}</td><td>${p.title}</td><td>${p.autor}</td><td><a class="button border-blue button-little" href="${pageContext.request.contextPath}/content/update/${p.id}">修改</a> <a class="button border-yellow button-little" href="${pageContext.request.contextPath}/content/delete/${p.id}" onclick="{if(confirm('确认删除?')){return true;}return false;}">删除</a></td></tr>
         </c:forEach>
       </table>
       <div class="panel-foot text-center">
