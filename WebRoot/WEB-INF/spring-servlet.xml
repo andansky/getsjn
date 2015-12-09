@@ -57,6 +57,7 @@
         <mvc:interceptor>
             <mvc:mapping path="/**"/> 
             <mvc:exclude-mapping path="/admin/**"/> 
+            <mvc:exclude-mapping path="/share/**"/> 
             <mvc:exclude-mapping path="/images/**"/> 
             <mvc:exclude-mapping path="/css/**"/> 
             <mvc:exclude-mapping path="/js/**"/> 
