@@ -1,7 +1,9 @@
 package com.springmvc.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.URLCodec;
 import com.apicloud.sdk.api.Resource;
 import com.springmvc.dao.ArticleDao;
 import com.springmvc.dao.ColumnDao;
@@ -13,9 +15,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("content")
@@ -78,10 +87,21 @@ public class ContentController {
 
 	@RequestMapping(value = "uploadfile",method = RequestMethod.GET)
 	public String uploadfile(ModelMap modelMap) {
-
+		
 		Resource resource = new Resource(Init.appId, Init.appKey,"");
 		JSONObject json = resource.upload("C:/Users/Administrator/Desktop/粉色水印.png");
 		modelMap.addAttribute("test",json);
 		return "test/test";
+	}
+	@RequestMapping(value = "checkObjectExists/{title}",method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> checkObjectExists(HttpServletResponse response,@PathVariable(value = "title")String title) throws IOException {
+		Map<String, Object> map=new HashMap<String,Object>();
+		ArticleDao articledao=new ArticleDao(); 
+		title=URLDecoder.decode(title,"utf-8");
+		boolean temp=articledao.checkObjectExists(title);
+		System.out.println(temp);
+		map.put("status", temp);
+		return map;
 	}
 }

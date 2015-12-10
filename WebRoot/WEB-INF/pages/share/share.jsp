@@ -32,6 +32,7 @@
 <div class="content">
   ${article.content}
 </div>
+<!--  
 <div class="list">
   <h3>热门文章</h3>
   <ul>
@@ -61,6 +62,7 @@
     </a>
   </ul>
 </div>
+-->
 <div class="download" id="download">
   <a href="http://qsbk.bluestorm.top">立即下载手机客户端</a>
 </div>

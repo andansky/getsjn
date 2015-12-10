@@ -47,7 +47,20 @@ public class ArticleDao {
         }
         return list;
     }
-
+    public boolean checkObjectExists(String title){
+    	
+    	JSONObject where=new JSONObject();
+    	where.put("title", title);
+    	JSONObject filterJSON=new JSONObject();
+    	filterJSON.put("where", where);     
+    	System.out.println(filterJSON.toString());
+        JSONArray jsonArray=resource.doFilterSearch(table_name,filterJSON.toJSONString()).getJSONArray("data");
+        System.out.println(jsonArray.toString());
+        if(jsonArray.size()>0){
+        	return true;
+        }
+		return false;
+    }
     public ArticleEntity getArticle(String id) throws UnsupportedEncodingException {
 
         ArticleEntity articleEntity=new ArticleEntity();

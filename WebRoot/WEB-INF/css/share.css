@@ -1,70 +1,72 @@
-body{
-  font-family: "宋体";
-  margin: 10px;
-}
-h3,h5,p,ul,li,div{
-  margin: 0;
-  padding: 0;
-}
-a{
-  color: #333;
-}
-.center{
-  text-align: center;
-}
-.title{
-  width: 100%;
-  float: left;
-}
-.date{
-  float: left;
-  line-height: 30px;
-  font-size: 12px;
-  color: #ccc;
-  font-family: "微软雅黑";
-}
-.top{
-  width: 100%;
-  height: 40px;
-  background: #666;
-  position:fixed; 
-  margin-left: -10px;
-  top: 0;
-  filter:alpha(opacity=70); /*IE滤镜，透明度50%*/
-  -moz-opacity:0.7; /*Firefox私有，透明度50%*/
-  opacity:0.7;/*其他，透明度50%*/
-  color: #fff;
-  line-height: 40px;
-  text-align: center;
+  body{
+    font-family: "宋体";
+    margin: 10px;
+  }
+  h3,h5,p,ul,li,div{
+    margin: 0;
+    padding: 0;
+  }
+  a{
+    color: #333;
+  }
+  .center{
+    text-align: center;
+  }
+  .title{
+    width: 100%;
+    float: left;
+  }
+  .date{
+    width: 100%;
+    height: 30px;
+    float: left;
+    line-height: 30px;
+    font-size: 12px;
+    color: #ccc;
+    font-family: "微软雅黑";
+  }
+  .top{
+    width: 100%;
+    height: 40px;
+    background: #666;
+    position:fixed; 
+    margin-left: -10px;
+    top: 0;
+    filter:alpha(opacity=70); /*IE滤镜，透明度50%*/
+    -moz-opacity:0.7; /*Firefox私有，透明度50%*/
+    opacity:0.7;/*其他，透明度50%*/
+    color: #fff;
+    line-height: 40px;
+    text-align: center;
 
-}
-.download{
-  width: 100%;
-  height: 40px;
-  background: #666;
-  position:fixed; 
-  margin-left: -10px;
-  bottom: 0;
-  display: none;
-  filter:alpha(opacity=90); /*IE滤镜，透明度50%*/
-  -moz-opacity:0.9; /*Firefox私有，透明度50%*/
-  opacity:0.9;/*其他，透明度50%*/
-  color: #fff;
-  line-height: 40px;
-  text-align: center;
+  }
+  .download{
+    width: 100%;
+    height: 40px;
+    background: #666;
+    position:fixed; 
+    margin-left: -10px;
+    bottom: 0;
+    display: none;
+    filter:alpha(opacity=90); /*IE滤镜，透明度50%*/
+    -moz-opacity:0.9; /*Firefox私有，透明度50%*/
+    opacity:0.9;/*其他，透明度50%*/
+    color: #fff;
+    line-height: 40px;
+    text-align: center;
 
-}
-.download a{
-  color: #fff;
-  text-decoration: none;
-}
-.left{
-  float: left;
-}
-.list{
-  float: left;
-}
-.list h3{
+  }
+  .download a{
+    color: #fff;
+    text-decoration: none;
+  }
+  .left{
+    float: left;
+  }
+  .list{
+    float: left;
+  }
+  .list h3{
     height: 2.4em;
     line-height: 2.4em;
     color: #333;
@@ -80,89 +82,132 @@ a{
     margin-bottom: 10px;
   }
 @media screen and (min-device-width:320px){
-  .content{
-    width: 280px;
-    font-size: 16px;
-    line-height: 1.5;
-    float: left;
-    margin-bottom: 10px;
+    .content{
+      font-size: 16px;
+      line-height: 1.5em;
+      float: left;
+      margin-bottom: 10px;
+    }
+    .list li img{
+      width:80px;
+      height:80px;
+      float: left;
+    }
+    .list li h5{
+      width:210px;
+      margin-left: 10px;
+      float: left;
+      font-size: 1em;
+      line-height: 1.5em;
+    }
   }
-  .list li img{
-    width:80px;
-    height:80px;
-    float: left;
-  }
-  .list li h5{
-    width:210px;
-    margin-left: 10px;
-    float: left;
-    font-size: 1em;
-    line-height: 1.5em;
-  }
-}
 @media screen and (min-device-width:480px){
-  .content{
-    width: 440px;
-    font-size: 16px;
-    line-height: 1.5;
-    float: left;
-    margin-bottom: 10px;
+    .content{
+      font-size: 16px;
+      line-height: 1.5em;
+      float: left;
+      margin-bottom: 10px;
+    }
+    .list li img{
+      width:100px;
+      height:100px;
+      float: left;
+    }
+    .list li h5{
+      width:345px;
+      margin-left: 15px;
+      float: left;
+      font-size: 1em;
+      line-height: 1.5em;
+    }
   }
-  .list li img{
-    width:100px;
-    height:100px;
-    float: left;
-  }
-  .list li h5{
-    width:345px;
-    margin-left: 15px;
-    float: left;
-    font-size: 1em;
-    line-height: 1.5em;
-  }
-}
 @media screen and (min-device-width:720px){
-  .content{
-    width: 680px;
-    font-size: 16px;
-    line-height: 1.5;
-    float: left;
-    margin-bottom: 10px;
+    .content{
+      font-size: 16px;
+      line-height: 1.5em;
+      float: left;
+      margin-bottom: 10px;
+    }
+    .list li img{
+      width:100px;
+      height:100px;
+      float: left;
+    }
+    .list li h5{
+      width:580px;
+      margin-left: 20px;
+      float: left;
+      font-size: 1em;
+      line-height: 1.5em;
+    }
   }
-  .list li img{
-    width:100px;
-    height:100px;
-    float: left;
-  }
-  .list li h5{
-    width:580px;
-    margin-left: 20px;
-    float: left;
-    font-size: 1em;
-    line-height: 1.5em;
-  }
-}
 @media screen and (min-device-width:1080px){
-  .content{
-    width: 1040px;
-    font-size: 16px;
-    line-height: 1.5;
-    float: left;
-    margin-bottom: 10px;
+    .title{
+      font-size: 24px;
+      width: 100%;
+      float: left;
+    }
+    .date{
+      font-size: 16px;
+      width: 100%;
+      height: 30px;
+      float: left;
+      line-height: 30px;
+      color: #ccc;
+      font-family: "微软雅黑";
+    }
+    .top{
+      width: 100%;
+      height: 50px;
+      background: #666;
+      position:fixed; 
+      margin-left: -10px;
+      top: 0;
+      filter:alpha(opacity=70); /*IE滤镜，透明度50%*/
+      -moz-opacity:0.7; /*Firefox私有，透明度50%*/
+      opacity:0.7;/*其他，透明度50%*/
+      color: #fff;
+      line-height: 50px;
+      font-size: 24px;
+      text-align: center;
+
+    }
+    .download{
+      width: 100%;
+      height: 50px;
+      background: #666;
+      position:fixed; 
+      margin-left: -10px;
+      bottom: 0;
+      display: none;
+      filter:alpha(opacity=90); /*IE滤镜，透明度50%*/
+      -moz-opacity:0.9; /*Firefox私有，透明度50%*/
+      opacity:0.9;/*其他，透明度50%*/
+      color: #fff;
+      line-height: 50px;
+      font-size: 24px;
+      text-align: center;
+
+    }
+    .content{
+      font-size: 18px;
+      line-height: 26px;
+      float: left;
+      margin-bottom: 10px;
+    }
+    .list ul li{
+      margin-right: 15px;
+    }
+    .list li img{
+      width:100px;
+      height:100px;
+      float: left;
+    }
+    .list li h5{
+      width:400px;
+      margin-left: 15px;
+      float: left;
+      font-size: 1em;
+      line-height: 1.5em;
+    }
   }
-  .list ul li{
-    margin-right: 15px;
-  }
-  .list li img{
-    width:100px;
-    height:100px;
-    float: left;
-  }
-  .list li h5{
-    width:400px;
-    margin-left: 15px;
-    float: left;
-    font-size: 1em;
-    line-height: 1.5em;
-  }
-}
