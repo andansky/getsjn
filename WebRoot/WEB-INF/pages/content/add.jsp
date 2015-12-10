@@ -153,6 +153,8 @@
 				        success : function(data) {
 				          if(data.status==true){
 				        	  alert("文章已存在,请不要重复添加！");
+				        	  title.css("color","#FF0000");
+				        	  title.focus();
 				          }
 				        } 
 				      }); 
