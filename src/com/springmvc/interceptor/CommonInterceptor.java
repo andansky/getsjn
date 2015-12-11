@@ -7,7 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by Administrator on 2015/11/23 0023.
+* 类名: CommonInterceptor </br>
+* 包名： com.springmvc.interceptor
+* 描述: 登录拦截器  </br>
+* 创建时间：  2015-12-11 </br>
+* 发布版本：V1.0  </br>
  */
 public class CommonInterceptor implements HandlerInterceptor{
 

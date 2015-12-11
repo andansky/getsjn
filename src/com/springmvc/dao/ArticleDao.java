@@ -1,6 +1,5 @@
 package com.springmvc.dao;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.apicloud.sdk.api.Resource;
@@ -9,7 +8,6 @@ import com.springmvc.entity.ArticleEntity;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 
 /**

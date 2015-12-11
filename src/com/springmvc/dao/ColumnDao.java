@@ -1,20 +1,25 @@
 package com.springmvc.dao;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.springmvc.data.Init;
-import com.apicloud.sdk.api.Resource;
-import com.springmvc.entity.ColumnEntity;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.apicloud.sdk.api.Resource;
+import com.springmvc.data.Init;
+import com.springmvc.entity.ColumnEntity;
+
 /**
- * Created by Administrator on 2015/11/22 0022.
+* 类名: ColumnDao </br>
+* 包名： com.springmvc.dao
+* 描述: 栏目类   </br>
+* 创建时间：  2015-12-11 </br>
+* 发布版本：V1.0  </br>
  */
 public class ColumnDao {
+	
     private Resource resource;
     private String table_name="channel";
 
@@ -25,7 +30,6 @@ public class ColumnDao {
     public ArrayList<ColumnEntity> columnList() throws UnsupportedEncodingException {
         ArrayList<ColumnEntity> list=new ArrayList<ColumnEntity>();
         JSONArray jsonArray=resource.getObjects(table_name).getJSONArray("data");
-
         for(int i=0;i<jsonArray.size();i++){
             ColumnEntity columnEntity=new ColumnEntity();
             JSONObject jsonObject=new JSONObject();
@@ -41,7 +45,6 @@ public class ColumnDao {
     }
 
     public boolean create(String name,String img) throws UnsupportedEncodingException {
-
         JSONObject property=new JSONObject();
         property.put("title", URLEncoder.encode(name,"utf-8"));
         property.put("img","");
@@ -50,7 +53,6 @@ public class ColumnDao {
     }
 
     public boolean delete(String id){
-
         JSONObject jsonObject=resource.deleteObject(table_name, id);
         return true;
     }

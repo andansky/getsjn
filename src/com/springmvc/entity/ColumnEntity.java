@@ -1,7 +1,11 @@
 package com.springmvc.entity;
 
 /**
- * Created by Administrator on 2015/11/20 0020.
+* 类名: ColumnEntity </br>
+* 包名： com.springmvc.entity
+* 描述: 栏目类 </br>
+* 创建时间：  2015-12-11 </br>
+* 发布版本：V1.0  </br>
  */
 public class ColumnEntity {
     private String id;

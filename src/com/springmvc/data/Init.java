@@ -1,9 +1,12 @@
 package com.springmvc.data;
 
-import com.apicloud.sdk.api.Resource;
-
 /**
- * Created by Administrator on 2015/11/18 0018.
+* 类名: Init </br>
+* 包名： com.springmvc.data
+* 描述: 初始化 key </br>
+* 开发人员： liuhf </br>
+* 创建时间：  2015-12-11 </br>
+* 发布版本：V1.0  </br>
  */
 public class Init {
     public static String appId="A6999270667390";

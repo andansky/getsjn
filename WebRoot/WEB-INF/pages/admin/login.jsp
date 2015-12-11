@@ -30,7 +30,7 @@
       <br />
       <br />
       <div class="media media-y">
-        <a href="http://www.pintuer.com" target="_blank"><img src="${pageContext.request.contextPath}/images/logo.png" class="radius" alt="后台管理系统" /></a>
+        <a href="http://www.souvc.com" target="_blank"><img src="${pageContext.request.contextPath}/images/logo.png" class="radius" alt="后台管理系统" /></a>
       </div>
       <br />
       <br />
