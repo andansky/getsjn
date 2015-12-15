@@ -1,17 +1,21 @@
 package com.springmvc.dao;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.ArrayList;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.apicloud.sdk.api.Resource;
 import com.springmvc.data.Init;
 import com.springmvc.entity.ArticleEntity;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.util.ArrayList;
-
 /**
- * Created by Administrator on 2015/11/22 0022.
+* 类名: ArticleDao </br>
+* 包名： com.springmvc.dao
+* 描述: 文章类   </br>
+* 创建时间：  2015-12-15 </br>
+* 发布版本：V1.0  </br>
  */
 public class ArticleDao {
 
@@ -22,8 +26,16 @@ public class ArticleDao {
         resource=new Resource(Init.appId,Init.appKey,"");
     }
 
+    /**
+    * 方法名：getArticleList</br>
+    * 详述：获取文章列表  </br>
+    * 创建时间：2015-12-15  </br>
+    * @param index
+    * @return
+    * @throws UnsupportedEncodingException 说明返回值含义
+    * @throws 说明发生此异常的条件
+     */
     public ArrayList<ArticleEntity> getArticleList(int index) throws UnsupportedEncodingException {
-
         ArrayList<ArticleEntity> list=new ArrayList<ArticleEntity>();
         JSONObject filterJSON=new JSONObject();
         filterJSON.put("limit", 10);//限制返回十条记录
@@ -45,8 +57,16 @@ public class ArticleDao {
         }
         return list;
     }
+    
+    /**
+    * 方法名：checkObjectExists</br>
+    * 详述：判断文章是否存在  </br>
+    * 创建时间：2015-12-15  </br>
+    * @param title
+    * @return 说明返回值含义
+    * @throws 说明发生此异常的条件
+     */
     public boolean checkObjectExists(String title){
-    	
     	JSONObject where=new JSONObject();
     	where.put("title", title);
     	JSONObject filterJSON=new JSONObject();
@@ -59,8 +79,17 @@ public class ArticleDao {
         }
 		return false;
     }
+    
+    /**
+    * 方法名：getArticle</br>
+    * 详述：根据 文章ID 获取文章  </br>
+    * 创建时间：2015-12-15  </br>
+    * @param id
+    * @return
+    * @throws UnsupportedEncodingException 说明返回值含义
+    * @throws 说明发生此异常的条件
+     */
     public ArticleEntity getArticle(String id) throws UnsupportedEncodingException {
-
         ArticleEntity articleEntity=new ArticleEntity();
         JSONObject jsonObject = resource.getObject(table_name, id);
         articleEntity.setId(jsonObject.getString("id"));
@@ -73,8 +102,22 @@ public class ArticleDao {
         return articleEntity;
     }
 
+    /**
+    * 方法名：create</br>
+    * 详述：增加文章 </br>
+    * 创建时间：2015-12-15  </br>
+    * @param title
+    * @param type
+    * @param rel_chan
+    * @param content
+    * @param img
+    * @param bot
+    * @param autor
+    * @return
+    * @throws UnsupportedEncodingException 说明返回值含义
+    * @throws 说明发生此异常的条件
+     */
     public Boolean create(String title, String type, String rel_chan, String content, String img, String bot,String autor) throws UnsupportedEncodingException {
-    	
         JSONObject property=new JSONObject();
         if("txt".equals(type)||"img".equals(type)){
             property.put("imgs",img);
@@ -96,11 +139,34 @@ public class ArticleDao {
         return true;
     }
 
+    /**
+    * 方法名：delete</br>
+    * 详述：删除文章 </br>
+    * 创建时间：2015-12-15  </br>
+    * @param id
+    * @return 说明返回值含义
+    * @throws 说明发生此异常的条件
+     */
     public Boolean delete(String id){
         JSONObject jsonObject=resource.deleteObject(table_name, id);
         return true;
     }
 
+    /**
+    * 方法名：update</br>
+    * 详述：更新文章  </br>
+    * 创建时间：2015-12-15  </br>
+    * @param id
+    * @param title
+    * @param type
+    * @param rel_chan
+    * @param content
+    * @param img
+    * @param bot
+    * @return
+    * @throws UnsupportedEncodingException 说明返回值含义
+    * @throws 说明发生此异常的条件
+     */
     public Boolean update(String id,String title,String type,String rel_chan,String content,String img,String bot) throws UnsupportedEncodingException {
     	System.out.println(id);
     	JSONObject property=new JSONObject();
