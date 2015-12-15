@@ -1,17 +1,18 @@
 package com.springmvc.controller;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.apicloud.sdk.api.Resource;
+import com.google.code.kaptcha.Constants;
 import com.springmvc.data.Init;
 
 /**
@@ -50,24 +51,46 @@ public class AdminController {
     * @throws 说明发生此异常的条件
      */
     @RequestMapping(value = "dologin",method = RequestMethod.POST)
-    public String doLogin(@RequestParam(value = "username") String username,@RequestParam(value = "password") String password,HttpSession httpSession){
-        JSONObject property = new JSONObject();
-        JSONObject property2 = new JSONObject();
-        property2.put("username", username);
-        property2.put("password", password);
-        property.put("where",property2);
-        Resource resource = new Resource(Init.appId, Init.appKey,"");
-        com.alibaba.fastjson.JSONObject json = resource.doFilterSearch("admin",property.toString());
-        JSONArray array=json.getJSONArray("data");
-        com.alibaba.fastjson.JSONObject admin;
-        if(array.size()>0){
-            admin=array.getJSONObject(0);
-            httpSession.setAttribute("admin", admin.toString());
-            httpSession.setAttribute("username", username);
-            return "redirect:/";
+    public String doLogin(HttpServletRequest request,HttpSession httpSession){
+        //页面获取传入的值
+    	String username=request.getParameter("username").trim();
+        String password=request.getParameter("password").trim();
+        String randImage=request.getParameter("passcode").trim().toLowerCase();
+        //获取生成的验证码
+        String code = (String)httpSession.getAttribute(Constants.KAPTCHA_SESSION_KEY);
+        System.out.println(code);
+        System.out.println(randImage);
+        if(!code.equals(randImage)){
+        	request.setAttribute("username", username);
+        	request.setAttribute("errormessage", "验证码错误！");
+        	request.setAttribute("status", false);
+        	return "admin/login";
         }else{
-            return "redirect:login";
+        	JSONObject property = new JSONObject();
+            JSONObject property2 = new JSONObject();
+            property2.put("username", username);
+            property2.put("password", password);
+            property.put("where",property2);
+            Resource resource = new Resource(Init.appId, Init.appKey,"");
+            JSONObject json = resource.doFilterSearch("admin",property.toString());
+            JSONArray array=json.getJSONArray("data");
+            JSONObject admin;
+            if(array.size()>0){
+                admin=array.getJSONObject(0);
+                //把用户信息放到session中。
+                httpSession.setAttribute("admin", admin.toString());
+                httpSession.setAttribute("username", username);
+                request.setAttribute("username", username);
+                request.setAttribute("status", true);
+                return "index/index";
+            }else{
+            	request.setAttribute("username", username);
+            	request.setAttribute("errormessage", "用户名或者密码错误！");
+            	request.setAttribute("status", false);
+            	return "admin/login";
+            }
         }
+        
     }
 
     /**

@@ -1,4 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
 <html lang="zh-cn">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -6,14 +13,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<meta name="renderer" content="webkit">
 	<title>后台管理-文章列表</title>
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/pintuer.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css">
-	<script src="${pageContext.request.contextPath}/js/jquery.js"></script>
-	<script src="${pageContext.request.contextPath}/js/pintuer.js"></script>
-	<script src="${pageContext.request.contextPath}/js/respond.js"></script>
-	<script src="${pageContext.request.contextPath}/js/admin.js"></script>
-	<link type="image/x-icon" href="images/logo.ico" rel="shortcut icon" />
-	<link href="images/logo.ico" rel="bookmark icon" />
+	<link rel="stylesheet" href="<%=basePath%>css/pintuer.css">
+	<link rel="stylesheet" href="<%=basePath%>css/admin.css">
+	<script src="<%=basePath%>js/jquery.js"></script>
+	<script src="<%=basePath%>js/pintuer.js"></script>
+	<script src="<%=basePath%>js/respond.js"></script>
+	<script src="<%=basePath%>js/admin.js"></script>
+	<link type="image/x-icon" href="<%=basePath%>images/logo.ico" rel="shortcut icon" />
+	<link href="<%=basePath%>images/logo.ico" rel="bookmark icon" />
 </head>
 
 <body>
@@ -23,10 +30,10 @@
 		<div class="xm3">
 			<div class="panel border-back">
 				<div class="panel-body text-center">
-					<img src="images/face.jpg" width="120" class="radius-circle" /><br />
-					admin
+					<img src="<%=basePath%>images/face.jpg" width="120" class="radius-circle" /><br />
+					${username }
 				</div>
-				<div class="panel-foot bg-back border-back">您好，admin，这是您第100次登录，上次登录为2014-10-1。</div>
+				<div class="panel-foot bg-back border-back">您好，${username }，这是您第100次登录，上次登录为2014-10-1。</div>
 			</div>
 			<br />
 			<div class="panel">

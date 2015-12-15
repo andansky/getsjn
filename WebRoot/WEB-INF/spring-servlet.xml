@@ -62,10 +62,32 @@
             <mvc:exclude-mapping path="/images/**"/> 
             <mvc:exclude-mapping path="/css/**"/> 
             <mvc:exclude-mapping path="/js/**"/> 
+            <mvc:exclude-mapping path="/captcha-image"/> 
             <bean class="com.springmvc.interceptor.CommonInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
 
+   
+   <!-- 页面生成随机验证码 -->
+	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">  
+        <property name="config">  
+            <bean class="com.google.code.kaptcha.util.Config">  
+                <constructor-arg>  
+                    <props>  
+                        <prop key="kaptcha.border">no</prop>  
+                        <prop key="kaptcha.border.color">105,179,90</prop>  
+                        <prop key="kaptcha.textproducer.font.color">red</prop>  
+                        <prop key="kaptcha.image.width">250</prop>  
+                        <prop key="kaptcha.textproducer.font.size">80</prop>  
+                        <prop key="kaptcha.image.height">90</prop>  
+                        <prop key="kaptcha.session.key">code</prop>  
+                        <prop key="kaptcha.textproducer.char.length">4</prop>  
+                        <prop key="kaptcha.textproducer.font.names">宋体,楷体,微软雅黑</prop>  
+                    </props>  
+                </constructor-arg>  
+            </bean>  
+        </property>  
+    </bean>  
    
 
 </beans>
