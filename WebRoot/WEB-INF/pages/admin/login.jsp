@@ -26,8 +26,8 @@
   <script src="<%=basePath%>js/pintuer.js"></script>
   <script src="<%=basePath%>js/respond.js"></script>
   <script src="<%=basePath%>js/admin.js"></script>
-  <link type="image/x-icon" href="http://www.pintuer.com/favicon.ico" rel="shortcut icon" />
-  <link href="http://www.pintuer.com/favicon.ico" rel="bookmark icon" />
+  <link type="image/x-icon" href="<%=basePath%>images/logo.ico" rel="shortcut icon" />
+  <link href="<%=basePath%>images/logo.ico" rel="bookmark icon" />
 </head>
 
 <body>
