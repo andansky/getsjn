@@ -58,8 +58,8 @@ public class AdminController {
         String randImage=request.getParameter("passcode").trim().toLowerCase();
         //获取生成的验证码
         String code = (String)httpSession.getAttribute(Constants.KAPTCHA_SESSION_KEY);
-        System.out.println(code);
-        System.out.println(randImage);
+//        System.out.println(code);
+//        System.out.println(randImage);
         if(!code.equals(randImage)){
         	request.setAttribute("username", username);
         	request.setAttribute("errormessage", "验证码错误！");

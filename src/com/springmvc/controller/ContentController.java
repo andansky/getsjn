@@ -6,6 +6,7 @@ import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -43,7 +44,7 @@ public class ContentController {
 
 	/**
 	* 方法名：list</br>
-	* 详述：文章列表 </br>
+	* 详述：文章默认列表 </br>
 	* 创建时间：2015-12-15  </br>
 	* @param model
 	* @param httpSession
@@ -52,14 +53,43 @@ public class ContentController {
 	* @throws 说明发生此异常的条件
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public String  list(Model model,HttpSession httpSession) throws UnsupportedEncodingException {
+	public String  list(Model model,HttpSession httpSession,HttpServletRequest request) throws UnsupportedEncodingException {
 		httpSession.getAttribute("admin");		
 		if(httpSession.getAttribute("admin")==null){
 			return "admin/login";
 		}else{	
 			JSONObject temp=JSON.parseObject(httpSession.getAttribute("admin").toString());
 			autor=temp.getString("username");
+			request.setAttribute("page", 1);
 			model.addAttribute("list",articleDao.getArticleList(1));//getArticleList的参数为获取当前第几页的数据
+			return "content/list";
+		}	
+	}
+	
+	/**
+	* 方法名：list</br>
+	* 详述：文章分页显示 </br>
+	* 开发人员：liuhf </br>
+	* 创建时间：2015-12-16  </br>
+	* @param model
+	* @param httpSession
+	* @param page
+	* @param request
+	* @return
+	* @throws UnsupportedEncodingException 说明返回值含义
+	* @throws 说明发生此异常的条件
+	 */
+	@RequestMapping(value = "list",method = RequestMethod.GET)
+	public String  pageList(Model model,HttpSession httpSession,HttpServletRequest request) throws UnsupportedEncodingException {
+		httpSession.getAttribute("admin");		
+		if(httpSession.getAttribute("admin")==null){
+			return "admin/login";
+		}else{	
+			int page=Integer.parseInt(request.getParameter("page"));
+			JSONObject temp=JSON.parseObject(httpSession.getAttribute("admin").toString());
+			autor=temp.getString("username");
+			request.setAttribute("page", page);
+			model.addAttribute("list",articleDao.getArticleList(page));//getArticleList的参数为获取当前第几页的数据
 			return "content/list";
 		}	
 	}
