@@ -35,36 +35,44 @@
 <body>
 <jsp:include page="../layout/head.jsp"/>
 <div class="admin">
-  <form method="post">
+  
+  <form method="post"  action="${pageContext.request.contextPath}/content/list" method="post" id="userBasePageId">
+    <input type="hidden" id="page" name="page" value="${page}"/>
     <div class="panel admin-panel">
-      <div class="panel-head"><strong>文章列表</strong></div>
+      <div class="panel-head">
+         <strong>文章列表</strong>
+      </div>
       <div class="padding border-bottom">
         <input type="button" class="button button-small checkall" name="checkall" checkfor="id" value="全选" />
         <a href="${pageContext.request.contextPath}/content/add" type="button" class="button button-small border-green">添加文章</a>
         <input type="button" class="button button-small border-yellow" value="批量删除" />
+        <input type="button" class="button button-small border-yellow float-right" value="查找" style="margin-left: 10px" id="searchButtonId" />
+        <input type="text" id="searchtext"  class="button  float-right" name="searchinput" width="30%" size="50" placeholder="文章标题" value=""/>
       </div>
       <table class="table table-hover">
         <tr>
 	        <th width="60">选择</th>
+	        <th width="60">序号</th>
 	        <th width="120">类型</th>
 	        <th width="*">标题</th>
 	        <th width="100">作者</th>
 	        <th width="100">操作</th>
         </tr>
-        <c:forEach  items="${list}" var="p">
-        <tr>
-        <td><input type="checkbox" name="id" value="${p.id}" /></td>
-        <td>${p.type}</td><td><a href="http://souvc.com/share/share/${p.id}">${p.title}</a></td>
-        <td>${p.autor}</td>
-        <td>
-            <a class="button border-blue button-little" href="${pageContext.request.contextPath}/content/update/${p.id}">修改</a> 
-             <a class="button border-yellow button-little" href="${pageContext.request.contextPath}/content/delete/${p.id}" onclick="{if(confirm('确认删除?')){return true;}return false;}">删除</a>
-        </td>
-        </tr>
+        <c:forEach varStatus="status" items="${list}" var="p">
+	        <tr>
+	        <td><input type="checkbox" name="id" value="${p.id}" /></td>
+	        <td>${status.index+1 }</td>
+	        <td>${p.type}</td>
+	        <td><a href="http://souvc.com/share/share/${p.id}">${p.title}</a></td>
+	        <td>${p.autor}</td>
+	        <td>
+	            <a class="button border-blue button-little" href="${pageContext.request.contextPath}/content/update/${p.id}">修改</a> 
+	            <a class="button border-yellow button-little" href="${pageContext.request.contextPath}/content/delete/${p.id}" 
+	            onclick="{if(confirm('确认删除?')){return true;}return false;}">删除</a>
+	        </td>
+	        </tr>
         </c:forEach>
       </table>
-      
-   
       <div class="panel-foot text-center">
          <!-- 
         <ul class="pagination">
@@ -73,7 +81,7 @@
          -->
         <ul class="pagination">
         <c:choose>
-	        <c:when test="${page eq 1||page eq 0}">
+	        <c:when test="${page eq 1||page eq 0||page eq -1}">
 	             <li><a href="javascript:;" id="backPage">上一页</a></li>
 	        </c:when>
         	<c:otherwise>
@@ -92,7 +100,14 @@
         </ul>
         -->
         <ul class="pagination">
-           <li><a href="<%=basePath%>content/list?page=${page+1}" id="nextPage">下一页</a></li>
+         <c:choose>
+	        <c:when test="${page eq -1}">
+	            <li><a href="javascript:;" id="nextPage">下一页</a></li>
+	        </c:when>
+	        <c:otherwise>
+        	    <li><a href="<%=basePath%>content/list?page=${page+1}" id="nextPage">下一页</a></li>
+        	</c:otherwise>
+        </c:choose>
         </ul>
           <!-- 
          <ul class="pagination">
@@ -104,5 +119,33 @@
      
   </form>
 </div>
+
+<script type="text/javascript">
+
+	//点击查询按钮
+	$("#searchButtonId").on("click",function(){
+		$("#userBasePageId").submit();
+	});
+
+	function search(){
+		if($("#searchtext").val()==""){
+			alert("请输入文章标题!");
+		}else{
+			$.ajax( {  
+		        type : 'get', 
+		        async:false,
+		        cache:false,  
+		        contentType : 'application/x-www-form-urlencoded; charset=UTF-8',  
+		        url : 'list/'+encodeURI(encodeURI($("#searchtext").val())),  
+		        dataType : 'json',  
+		        success : function(data) {
+		        	alert("123");
+		        	window.location.reload(); 
+		        } 
+		      }); 
+		}
+	}
+</script>
+
 </body>
 </html>

@@ -9,7 +9,7 @@
     <div class="mainer">
         <div class="admin-navbar">
             <span class="float-right">
-            	<a class="button button-little bg-main" href="www.souvc.com" target="_blank">前台首页</a>
+            	<a class="button button-little bg-main" href="http://souvc.com/" target="_blank">前台首页</a>
                 <a class="button button-little bg-yellow" href="${pageContext.request.contextPath}/admin/logout">注销登录</a>
             </span>
             <ul class="nav nav-inline admin-nav">

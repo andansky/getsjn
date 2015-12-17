@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,7 @@ import com.apicloud.sdk.api.Resource;
 import com.springmvc.dao.ArticleDao;
 import com.springmvc.dao.ColumnDao;
 import com.springmvc.data.Init;
+import com.springmvc.entity.ArticleEntity;
 
 /**
 * 类名: ContentController </br>
@@ -79,19 +81,23 @@ public class ContentController {
 	* @throws UnsupportedEncodingException 说明返回值含义
 	* @throws 说明发生此异常的条件
 	 */
-	@RequestMapping(value = "list",method = RequestMethod.GET)
+	@RequestMapping(value = "/list", method = {RequestMethod.POST,RequestMethod.GET})
 	public String  pageList(Model model,HttpSession httpSession,HttpServletRequest request) throws UnsupportedEncodingException {
-		httpSession.getAttribute("admin");		
-		if(httpSession.getAttribute("admin")==null){
-			return "admin/login";
-		}else{	
-			int page=Integer.parseInt(request.getParameter("page"));
+		int page=Integer.parseInt(request.getParameter("page"));//获取页码
+		String title=request.getParameter("searchinput");//获取查询条件
+		//如果查询条件不为空的时候，就进行条件查询
+		if(!"".equals(title)&&title!=null){
+			title=URLDecoder.decode(title,"utf-8");
+			request.setAttribute("page", -1);//设置点击上下页没有效果
+			model.addAttribute("list",articleDao.getArticleForTitle(title));
+		}else{//默认为直接查询
 			JSONObject temp=JSON.parseObject(httpSession.getAttribute("admin").toString());
 			autor=temp.getString("username");
 			request.setAttribute("page", page);
 			model.addAttribute("list",articleDao.getArticleList(page));//getArticleList的参数为获取当前第几页的数据
-			return "content/list";
-		}	
+		}
+		return "content/list";
+		
 	}
 
 	/**
@@ -155,6 +161,14 @@ public class ContentController {
 		return "redirect:/content/";
 	}
 
+	
+	@RequestMapping(value = "getNumber",method = RequestMethod.GET)
+	public int getNumber(){
+		int number=articleDao.getNumber();
+		return number;
+	}
+	
+	
 	@RequestMapping(value = "update/{id}",method = RequestMethod.GET)
 	public String update(ModelMap modelMap,@PathVariable(value = "id")String id) throws UnsupportedEncodingException {
 
@@ -172,6 +186,16 @@ public class ContentController {
 		return "test/test";
 	}
 	
+	/**
+	* 方法名：checkObjectExists</br>
+	* 详述：根据文章的标题查询，是否重复 </br>
+	* 创建时间：2015-12-17  </br>
+	* @param response
+	* @param title
+	* @return
+	* @throws IOException 说明返回值含义
+	* @throws 说明发生此异常的条件
+	 */
 	@RequestMapping(value = "checkObjectExists/{title}",method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> checkObjectExists(HttpServletResponse response,@PathVariable(value = "title")String title) throws IOException {
@@ -183,4 +207,5 @@ public class ContentController {
 		map.put("status", temp);
 		return map;
 	}
+	
 }

@@ -4,6 +4,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 
+import org.junit.Test;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.apicloud.sdk.api.Resource;
@@ -187,5 +189,47 @@ public class ArticleDao {
         property.put("is_bot",bot);
         JSONObject jsonObject=resource.updateObject(table_name,id, property);
         return true;
+    }
+    
+    /**
+    * 方法名：getArticleForTitle</br>
+    * 详述：通过文章标题搜索</br>
+    * 创建时间：2015-12-17  </br>
+    * @param title
+    * @return
+    * @throws UnsupportedEncodingException 说明返回值含义
+    * @throws 说明发生此异常的条件
+     */
+    public ArrayList<ArticleEntity> getArticleForTitle(String title) throws UnsupportedEncodingException {//通过文章标题搜索
+    	ArrayList<ArticleEntity> list=new ArrayList<ArticleEntity>();  
+        JSONObject where=new JSONObject();
+    	where.put("title", title);
+    	JSONObject filterJSON=new JSONObject();
+    	filterJSON.put("where", where); 
+    	System.out.println(filterJSON.toJSONString());
+    	JSONArray jsonArray=resource.doFilterSearch(table_name,filterJSON.toJSONString()).getJSONArray("data");
+    	System.out.println(jsonArray.toJSONString());
+        for(int i=0;i<jsonArray.size();i++){
+            ArticleEntity articleEntity=new ArticleEntity();
+            JSONObject jsonObject=new JSONObject();
+            jsonObject=jsonArray.getJSONObject(i);
+            articleEntity.setId(jsonObject.getString("id"));
+            articleEntity.setTitle(URLDecoder.decode(jsonObject.getString("title"), "utf-8"));
+            articleEntity.setType(jsonObject.getString("type"));
+            articleEntity.setContent(URLDecoder.decode(jsonObject.getString("content"), "utf-8"));
+            articleEntity.setCreate_date(jsonObject.getString("createdAt"));
+            articleEntity.setAutor(jsonObject.getString("autor"));
+            list.add(articleEntity);
+        }
+        System.out.println("list"+list.toString());
+        return list;
+    }
+
+    
+    
+    public int getNumber(){
+    	JSONObject json = resource.getObjectCount("article");
+    	int number=json.getIntValue("article");
+        return number;
     }
 }
