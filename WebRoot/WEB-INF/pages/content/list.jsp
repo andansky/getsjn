@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/pintuer.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css">
   <script src="${pageContext.request.contextPath}/js/jquery.js"></script>
+  <script src="${pageContext.request.contextPath}/js/jquery-form.js"></script>
   <script src="${pageContext.request.contextPath}/js/pintuer.js"></script>
   <script src="${pageContext.request.contextPath}/js/respond.js"></script>
   <script src="${pageContext.request.contextPath}/js/admin.js"></script>
@@ -45,7 +46,7 @@
       <div class="padding border-bottom">
         <input type="button" class="button button-small checkall" name="checkall" checkfor="id" value="全选" />
         <a href="${pageContext.request.contextPath}/content/add" type="button" class="button button-small border-green">添加文章</a>
-        <input type="button" class="button button-small border-yellow" value="批量删除" />
+        <input type="button" class="button button-small border-yellow" id="deleteSelectForm" value="批量删除" />
         <input type="button" class="button button-small border-yellow float-right" value="查找" style="margin-left: 10px" id="searchButtonId" />
         <input type="text" id="searchtext"  class="button  float-right" name="searchinput" width="30%" size="50" placeholder="文章标题" value=""/>
       </div>
@@ -59,6 +60,7 @@
 	        <th width="100">操作</th>
         </tr>
         <c:forEach varStatus="status" items="${list}" var="p">
+            <input id="articleId" type="hidden"/>
 	        <tr>
 	        <td><input type="checkbox" name="id" value="${p.id}" /></td>
 	        <td>${status.index+1 }</td>
@@ -67,8 +69,7 @@
 	        <td>${p.autor}</td>
 	        <td>
 	            <a class="button border-blue button-little" href="${pageContext.request.contextPath}/content/update/${p.id}">修改</a> 
-	            <a class="button border-yellow button-little" href="${pageContext.request.contextPath}/content/delete/${p.id}" 
-	            onclick="{if(confirm('确认删除?')){return true;}return false;}">删除</a>
+	            <a class="button border-yellow button-little" href="JavaScript:;"  data="${p.id}" onClick="delcfm('${p.id}')">删除</a>
 	        </td>
 	        </tr>
         </c:forEach>
@@ -126,25 +127,56 @@
 	$("#searchButtonId").on("click",function(){
 		$("#userBasePageId").submit();
 	});
-
-	function search(){
-		if($("#searchtext").val()==""){
-			alert("请输入文章标题!");
-		}else{
-			$.ajax( {  
-		        type : 'get', 
-		        async:false,
-		        cache:false,  
-		        contentType : 'application/x-www-form-urlencoded; charset=UTF-8',  
-		        url : 'list/'+encodeURI(encodeURI($("#searchtext").val())),  
-		        dataType : 'json',  
-		        success : function(data) {
-		        	alert("123");
-		        	window.location.reload(); 
-		        } 
-		      }); 
-		}
-	}
+	
+	//单条文章删除
+	function delcfm(orderId) { 
+        if (confirm("确认要删除该文章么？")) { 
+        	var requestUrl ="<%=basePath%>content/delete/";
+    		$.ajax( {    
+       			url:requestUrl,// 跳转到 action    
+       			data:{"orderId":orderId},    
+       			type:'post',    
+       			cache:false,    
+       			dataType:'json',    
+       			success:function(data) {    
+           			if(data.flag ==true ){    
+               			window.location.reload();    
+           			}else{    
+           				
+           			}    
+        			},    
+        			error : function() {    
+        			   alert("删除失败！");  
+        			}    
+    		}); 
+    		
+        } 
+	 } 
+	
+	
+	//批量删除文章
+	$("#deleteSelectForm").on("click",function(){
+		 var requestUrl ="<%=basePath%>content/deleteSelect/";
+		 $('#userBasePageId').attr("action", requestUrl);
+		 $('#userBasePageId').submit();
+		 /**
+		 $("#userBasePageId").ajaxSubmit({
+			type: "POST",
+			dataType: "json",
+		    success: function(data){
+		     	if(data.flag ==true){
+					alert("删除成功");
+					window.location.reload(); 
+				}else if(data.flag ==false){
+					window.location.reload(); 
+				}else{
+					alert("删除失败");
+		    	}
+			    }
+		    });
+		 */
+	});
+	
 </script>
 
 </body>

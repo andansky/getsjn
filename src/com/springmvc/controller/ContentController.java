@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +25,6 @@ import com.apicloud.sdk.api.Resource;
 import com.springmvc.dao.ArticleDao;
 import com.springmvc.dao.ColumnDao;
 import com.springmvc.data.Init;
-import com.springmvc.entity.ArticleEntity;
 
 /**
 * 类名: ContentController </br>
@@ -161,6 +159,68 @@ public class ContentController {
 		return "redirect:/content/";
 	}
 
+	/**
+	* 方法名：deleteArticle</br>
+	* 详述：异步删除文章  </br>
+	* 开发人员：liuhf </br>
+	* 创建时间：2015-12-18  </br>
+	* @param id
+	* @return 说明返回值含义
+	* @throws 说明发生此异常的条件
+	 */
+	@ResponseBody
+	@RequestMapping(value = "delete",method = {RequestMethod.POST,RequestMethod.GET})
+	public Map<String, Object> deleteArticle(HttpServletRequest request,ModelMap model){
+		Map<String, Object> result = new HashMap<String, Object>();
+		String articleId=request.getParameter("orderId");
+		Boolean flag=articleDao.delete(articleId);
+		result.put("flag", flag);
+		return result;
+	}
+	
+	/**
+	* 方法名：deleteSelectArticle</br>
+	* 详述：异步批量删除文章  </br>
+	* 开发人员：liuhf </br>
+	* 创建时间：2015-12-18  </br>
+	* @param request
+	* @param model
+	* @return 说明返回值含义
+	* @throws 说明发生此异常的条件
+	 */
+	@ResponseBody
+	@RequestMapping(value = "deleteSelectArticle",method = {RequestMethod.POST,RequestMethod.GET})
+	public Map<String, Object>   deleteSelectArticle(HttpServletRequest request,ModelMap model){
+		Map<String, Object> result = new HashMap<String, Object>();
+		String[] id=request.getParameterValues("id");//从页面取选中的对象
+		Boolean flag=false;
+		for (String articleId : id) {
+			flag=articleDao.delete(articleId);
+		}
+		result.put("flag", flag);
+		return result;
+	}
+	
+	/**
+	* 方法名：deleteSelect</br>
+	* 详述：批量删除文章 </br>
+	* 开发人员：liuhf </br>
+	* 创建时间：2015-12-18  </br>
+	* @param request
+	* @param model
+	* @return 说明返回值含义
+	* @throws 说明发生此异常的条件
+	 */
+	@RequestMapping(value = "deleteSelect",method = {RequestMethod.POST,RequestMethod.GET})
+	public String deleteSelect(HttpServletRequest request,ModelMap model){
+		String[] id=request.getParameterValues("id");//从页面取选中的对象
+		int page=Integer.parseInt(request.getParameter("page"));//获取页码
+		for (String articleId : id) {
+			articleDao.delete(articleId);
+		}
+		//返回到当前页
+		return "redirect:/content/list?page="+page;
+	}
 	
 	@RequestMapping(value = "getNumber",method = RequestMethod.GET)
 	public int getNumber(){
